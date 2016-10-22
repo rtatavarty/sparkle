@@ -1,0 +1,31 @@
+@(loginForm: Form[forms.LoginForm.LoginData])(implicit request: RequestHeader, messages: Messages)
+
+@import b3.inline.fieldConstructor
+
+@main(Messages("login.title")) {
+@request.flash.get("error").map { msg =>
+    <div class="col-md-4 col-md-offset-4 alert alert-danger alert-error text-center">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      <strong>@Messages("error")</strong> @msg
+    </div>
+  }
+
+  <fieldset class="col-md-4 col-md-offset-4">
+    <legend class="text-center">@Messages("login.credentials")</legend>
+    @helper.form(action = routes.SignInController.signIn()) {
+    @helper.CSRF.formField
+    @b3.email(loginForm("email"), '_hiddenLabel -> Messages("email"), 'placeholder -> Messages("email"), 'class -> "form-control input-lg")
+    @b3.password(loginForm("password"), '_hiddenLabel -> Messages("password"), 'placeholder -> Messages("password"), 'class -> "form-control input-lg")
+    @b3.checkbox(loginForm("remember"), '_text -> Messages("remember.me"), 'checked -> true)
+    <div class="form-group">
+        <div>
+            <button id="submit" type="submit" value="submit" class="btn btn-lg btn-primary btn-block">@Messages("login")</button>
+        </div>
+    </div>
+    }
+
+    <div>
+        <p class="not-a-member text-center">@Messages("sign.up.now")</p>
+    </div>
+  </fieldset>
+}

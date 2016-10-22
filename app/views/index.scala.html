@@ -1,0 +1,23 @@
+@(admin: models.daos.NsAdmin)(implicit messages: Messages)
+
+@import b3.inline.fieldConstructor
+@import org.joda.time.DateTime
+
+@main(Messages("home.title"), Some(admin)) {
+<div class="panel panel-primary text-center">
+    <div class="panel-heading">
+        <h1>
+            <span class="h1 label">Welcome to C360Sparkle!</span>
+        </h1>
+        <p>@DateTime.now.toString("HH:mm:ss - dd/MM/yyyy z")</p>
+    </div>
+    <div class="panel-body">
+        <p class="h4">
+            <span class="label label-success">
+                Server Running OK
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+            </span>
+        </p>
+    </div>
+</div>
+}

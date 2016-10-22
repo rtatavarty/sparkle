@@ -1,0 +1,39 @@
+error.email = Valid email required
+error.required = This field is required
+invalid.credentials = Invalid credentials!
+access.denied = Access denied!
+user.exists = There already exists a user with this email!
+could.not.authenticate = Could not authenticate with social provider! Please try again!
+
+home.title = C360Sparkle - Home
+sign.up.title = C360Sparkle - Sign Up
+login.title = C360Sparkle - Login
+
+toggle.navigation = Toggle navigation
+welcome.signed.in = Welcome, you are now signed in!
+
+sign.up.account = Sign up for a new account
+login.credentials = Login to C360Sparkle Console!
+
+error = Error!
+home = Home
+first.name = First name
+last.name = Last name
+full.name = Full name
+email = Email
+password = Password
+sign.up = Sign up
+login = Login
+logout = Logout
+sign.in.now = Login now
+sign.up.now = Contact Sysadmin for Credentials
+already.a.member = Already a member?
+not.a.member = Not a member?
+
+remember.me = Remember my login on this computer
+or.use.social = Or use your existing account on Context360 Inc to sign in:
+
+google = Google
+
+response.ok = 0712
+response.error = 0612

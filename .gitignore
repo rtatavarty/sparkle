@@ -2,7 +2,17 @@
 bin/
 /db
 .eclipse
+/.idea
+/*.iml
+/out
 /lib/
+/.idea_modules
+/.classpath
+/.project
+/RUNNING_PID
+/.settings
+.sbtserver
+*.lock
 /logs/
 /modules
 /project/target
