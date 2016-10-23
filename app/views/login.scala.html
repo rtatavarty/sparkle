@@ -1,6 +1,6 @@
 @(loginForm: Form[forms.LoginForm.LoginData])(implicit request: RequestHeader, messages: Messages)
 
-@import b3.inline.fieldConstructor
+@import b4.inline.fieldConstructor
 
 @main(Messages("login.title")) {
 @request.flash.get("error").map { msg =>
@@ -14,9 +14,9 @@
     <legend class="text-center">@Messages("login.credentials")</legend>
     @helper.form(action = routes.SignInController.signIn()) {
     @helper.CSRF.formField
-    @b3.email(loginForm("email"), '_hiddenLabel -> Messages("email"), 'placeholder -> Messages("email"), 'class -> "form-control input-lg")
-    @b3.password(loginForm("password"), '_hiddenLabel -> Messages("password"), 'placeholder -> Messages("password"), 'class -> "form-control input-lg")
-    @b3.checkbox(loginForm("remember"), '_text -> Messages("remember.me"), 'checked -> true)
+    @b4.email(loginForm("email"), '_hiddenLabel -> Messages("email"), 'placeholder -> Messages("email"), 'class -> "form-control input-lg")
+    @b4.password(loginForm("password"), '_hiddenLabel -> Messages("password"), 'placeholder -> Messages("password"), 'class -> "form-control input-lg")
+    @b4.checkbox(loginForm("remember"), '_text -> Messages("remember.me"), 'checked -> true)
     <div class="form-group">
         <div>
             <button id="submit" type="submit" value="submit" class="btn btn-lg btn-primary btn-block">@Messages("login")</button>
