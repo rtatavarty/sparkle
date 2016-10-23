@@ -3,7 +3,7 @@ Analytics with Spark and Cassandra
 
 ## Template Features:
 
-- Bootstrap 3.x
+- Bootstrap 4
 - Silhouette authentication
 - Cassandra database
 - Phantom DAO for Cassandra
