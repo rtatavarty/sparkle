@@ -3,21 +3,56 @@
 @import b4.inline.fieldConstructor
 @import org.joda.time.DateTime
 
-@main(Messages("home.title"), Some(admin)) {
-<div class="card card-primary text-center">
-    <div class="card-heading">
-        <h1>
-            <span class="h1 label">Welcome to C360Sparkle!</span>
-        </h1>
-        <p>@DateTime.now.toString("HH:mm:ss - dd/MM/yyyy z")</p>
-    </div>
-    <div class="card-body">
-        <p class="h4">
-            <span class="label label-success">
-                Server Running OK
-                <span class="fa fa-thumbs-up"></span>
-            </span>
-        </p>
+@plugin_css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/pages/email.min.css")">
+}
+
+@plugin_js = { }
+
+@page_js = {
+    <script nonce="763487yiyiy7">
+        (function(document, window, $) {
+            'use strict';
+            var Site = window.Site;
+            $(document).ready(function() {
+                Site.run();
+            });
+        })(document, window, jQuery);
+    </script>
+}
+
+@import java.lang.String; val body_styles="page-email page-email-welcome"
+
+@main(Messages("home.title"), plugin_css, plugin_js, page_js, body_styles, admin = Some(admin)) {
+<!-- Page -->
+<div class="page">
+    <div class="page-content">
+        <!-- Panel -->
+        <div class="panel">
+            <div class="panel-body container-fluid">
+                <div class="email-title">
+                    <img src="assets/images/sparkle_full.png" alt="..." />
+                    <!--<h4 class="blue-grey-400 font-weight-400">Sparkle</h4>-->
+                </div>
+                <div class="card welcome-content">
+                    <div class="card-block p-l-40 p-r-40  m-t-30 m-b-30">
+                        <h2>Welcome!</h2>
+                        <p>@DateTime.now.toString("HH:mm:ss - dd/MM/yyyy z")</p>
+                        <p>
+                            Your Sparkle installation is successful and we hope to make your business analytics workflows hassle free.
+                            Check out Sparkle documentation from above menu or click the button below to view
+                            your new account settings.
+                        </p>
+                        <a class="btn btn-primary" href="#">My Account</a>
+                    </div>
+                </div>
+                <div class="email-more">
+                    <p>You are currently signed up to Sparkle alerts as: @admin.email.</p>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel -->
     </div>
 </div>
+<!-- End Page -->
 }

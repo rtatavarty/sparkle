@@ -2,30 +2,66 @@
 
 @import b4.inline.fieldConstructor
 
-@main(Messages("login.title")) {
-@request.flash.get("error").map { msg =>
-    <div class="col-md-4 col-md-offset-4 alert alert-danger alert-error text-center">
-      <a href="#" class="close" data-dismiss="alert">&times;</a>
-      <strong>@Messages("error")</strong> @msg
-    </div>
-  }
+@plugin_css = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/pages/login.min.css")">
+}
 
-  <fieldset class="col-md-4 col-md-offset-4">
-    <legend class="text-center">@Messages("login.credentials")</legend>
-    @helper.form(action = routes.SignInController.signIn()) {
-    @helper.CSRF.formField
-    @b4.email(loginForm("email"), '_hiddenLabel -> Messages("email"), 'placeholder -> Messages("email"), 'class -> "form-control input-lg")
-    @b4.password(loginForm("password"), '_hiddenLabel -> Messages("password"), 'placeholder -> Messages("password"), 'class -> "form-control input-lg")
-    @b4.checkbox(loginForm("remember"), '_text -> Messages("remember.me"), 'checked -> true)
-    <div class="form-group">
-        <div>
-            <button id="submit" type="submit" value="submit" class="btn btn-lg btn-primary btn-block">@Messages("login")</button>
+@plugin_js = {
+    <script src="@routes.Assets.versioned("vendor/jquery-placeholder/jquery.placeholder.min.js")"></script>
+}
+
+@page_js = {
+    <script src="@routes.Assets.versioned("js/Plugin/jquery-placeholder.min.js")"></script>
+    <script nonce="763487yiyiy7">
+        (function(document, window, $) {
+            'use strict';
+            var Site = window.Site;
+            $(document).ready(function() {
+            Site.run();
+            });
+        })(document, window, jQuery);
+    </script>
+}
+
+@import java.lang.String; val body_styles="page-login layout-full page-dark"
+
+@site(Messages("login.title"), plugin_css, plugin_js, page_js, body_styles) {
+    <!-- Page -->
+    <div class="page vertical-align text-xs-center" data-animsition-in="fade-in" data-animsition-out="fade-out">>
+        <div class="page-content vertical-align-middle animation-slide-top animation-duration-1">
+            <div class="brand">
+                <img class="brand-img" src="/assets/images/sparkle_full.png" alt="...">
+                <!--<h2 class="brand-text">Sparkle</h2>-->
+            </div>
+            <p>Sign into your dashboard</p>
+            @request.flash.get("error").map { msg =>
+            <div class="alert alert-danger alert-error text-center">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>@Messages("error")</strong> @msg
+            </div>
+            }
+            @helper.form(action = routes.SignInController.signIn()) {
+                @helper.CSRF.formField
+                <label class="sr-only">Email</label>
+                @b4.email(loginForm("email"), '_hiddenLabel -> Messages("email"), 'placeholder -> Messages("email"), 'class -> "form-control")
+                <label class="sr-only">Password</label>
+                @b4.password(loginForm("password"), '_hiddenLabel -> Messages("password"), 'placeholder -> Messages("password"), 'class -> "form-control")
+                <div class="form-group clearfix">
+                    @b4.checkbox(loginForm("remember"), '_text -> Messages("remember.me"), 'checked -> true)
+                    <!--<a class="pull-xs-right" href="forgot-password.html">Forgot password?</a>-->
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button id="submit" type="submit" value="submit" class="btn btn-primary btn-block">@Messages("login")</button>
+                    </div>
+                </div>
+            }
+            <p class="not-a-member text-center">@Messages("sign.up.now")</p>
+            <footer class="page-copyright page-copyright-inverse">
+                <p>Sparkle by Context360 Inc.</p>
+                <p>© 2016. All RIGHTS RESERVED.</p>
+            </footer>
         </div>
     </div>
-    }
-
-    <div>
-        <p class="not-a-member text-center">@Messages("sign.up.now")</p>
-    </div>
-  </fieldset>
+    <!-- End Page -->
 }

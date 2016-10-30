@@ -1,0 +1,383 @@
+@(admin: Option[models.daos.NsAdmin] = None)
+
+<nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+                data-toggle="menubar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="hamburger-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
+                data-toggle="collapse">
+            <i class="icon wb-more-horizontal" aria-hidden="true"></i>
+        </button>
+        <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+            <img class="navbar-brand-logo" src="/assets/images/sparkle_icon_3.png" title="Sparkle">
+            <span class="navbar-brand-text hidden-xs-down"> Sparkle</span>
+        </div>
+        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
+                data-toggle="collapse">
+            <span class="sr-only">Toggle Search</span>
+            <i class="icon wb-search" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="navbar-container container-fluid">
+        <!-- Navbar Collapse -->
+        <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+            <!-- Navbar Toolbar -->
+            <ul class="nav navbar-toolbar">
+                <li class="nav-item hidden-float" id="toggleMenubar">
+                    <a class="nav-link" data-toggle="menubar" href="#" role="button">
+                        <i class="icon hamburger hamburger-arrow-left">
+                            <span class="sr-only">Toggle menubar</span>
+                            <span class="hamburger-bar"></span>
+                        </i>
+                    </a>
+                </li>
+                <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+                    <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
+                        <span class="sr-only">Toggle fullscreen</span>
+                    </a>
+                </li>
+                <li class="nav-item hidden-float">
+                    <a class="nav-link icon wb-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
+                       role="button">
+                        <span class="sr-only">Toggle Search</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-fw dropdown-mega">
+                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade"
+                       role="button">Documentation <i class="icon wb-chevron-down-mini" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="mega-content">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <h5>Job Scheduling</h5>
+                                    <ul class="blocks-2">
+                                        <li class="mega-menu m-0">
+                                            <ul class="list-icons">
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Periodic Jobs</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">On-Demand Jobs</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Interactive Jobs</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Job Priority</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Custom Scheduler</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Clustering</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="mega-menu m-0">
+                                            <ul class="list-icons">
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Job Status</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Fetching Results</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Job Versions</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Spark Status</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Cassandra Status</a>
+                                                </li>
+                                                <li><i class="wb-chevron-right-mini" aria-hidden="true"></i>
+                                                    <a href="#">Update Sparkle</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <h5 class="m-b-0">Quick Tips</h5>
+                                    <!-- Accordion -->
+                                    <div class="panel-group panel-group-simple" id="siteMegaAccordion" aria-multiselectable="true"
+                                         role="tablist">
+                                        <div class="panel">
+                                            <div class="panel-heading" id="siteMegaAccordionHeadingOne" role="tab">
+                                                <a class="panel-title" data-toggle="collapse" href="#siteMegaCollapseOne" data-parent="#siteMegaAccordion"
+                                                   aria-expanded="false" aria-controls="siteMegaCollapseOne">
+                                                    Keyboard Shortcuts
+                                                </a>
+                                            </div>
+                                            <div class="panel-collapse collapse" id="siteMegaCollapseOne" aria-labelledby="siteMegaAccordionHeadingOne"
+                                                 role="tabpanel">
+                                                <div class="panel-body">
+                                                    De moveat laudatur vestra parum doloribus labitur sentire partes, eripuit praesenti
+                                                    congressus ostendit alienae, voluptati ornateque accusamus
+                                                    clamat reperietur convicia albucius.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading" id="siteMegaAccordionHeadingTwo" role="tab">
+                                                <a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseTwo"
+                                                   data-parent="#siteMegaAccordion" aria-expanded="false"
+                                                   aria-controls="siteMegaCollapseTwo">
+                                                    Release Notes
+                                                </a>
+                                            </div>
+                                            <div class="panel-collapse collapse" id="siteMegaCollapseTwo" aria-labelledby="siteMegaAccordionHeadingTwo"
+                                                 role="tabpanel">
+                                                <div class="panel-body">
+                                                    Praestabiliorem. Pellat excruciant legantur ullum leniter vacare foris voluptate
+                                                    loco ignavi, credo videretur multoque choro fatemur
+                                                    mortis animus adoptionem, bello statuat expediunt naturales.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel">
+                                            <div class="panel-heading" id="siteMegaAccordionHeadingThree" role="tab">
+                                                <a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseThree"
+                                                   data-parent="#siteMegaAccordion" aria-expanded="false"
+                                                   aria-controls="siteMegaCollapseThree">
+                                                    Contact Authors
+                                                </a>
+                                            </div>
+                                            <div class="panel-collapse collapse" id="siteMegaCollapseThree" aria-labelledby="siteMegaAccordionHeadingThree"
+                                                 role="tabpanel">
+                                                <div class="panel-body">
+                                                    Horum, antiquitate perciperet d conspectum locus obruamus animumque perspici probabis
+                                                    suscipere. Desiderat magnum, contenta poena desiderant
+                                                    concederetur menandri damna disputandum corporum.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Accordion -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!-- End Navbar Toolbar -->
+            <!-- Navbar Toolbar Right -->
+            <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                       data-animation="scale-up" role="button">
+                        <span class="avatar avatar-online">
+                        <img src="@routes.Assets.versioned("images/5.jpg")" alt="...">
+                        <i></i>
+                      </span>
+                    </a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
+                        <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
+                        <div class="dropdown-divider" role="presentation"></div>
+                        <a class="dropdown-item" href="/signOut" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
+                       aria-expanded="false" data-animation="scale-up" role="button">
+                        <i class="icon wb-bell" aria-hidden="true"></i>
+                        <span class="tag tag-pill tag-danger up">5</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+                        <div class="dropdown-menu-header">
+                            <h5>NOTIFICATIONS</h5>
+                            <span class="tag tag-round tag-danger">New 5</span>
+                        </div>
+                        <div class="list-group">
+                            <div data-role="container">
+                                <div data-role="content">
+                                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                                        <div class="media">
+                                            <div class="media-left p-r-10">
+                                                <i class="icon wb-order bg-red-600 white icon-circle" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">A new job has been uploaded</h6>
+                                                <time class="media-meta" datetime="2016-06-12T20:50:48+08:00">5 hours ago</time>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                                        <div class="media">
+                                            <div class="media-left p-r-10">
+                                                <i class="icon wb-user bg-green-600 white icon-circle" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Completed on-demand job set #45 </h6>
+                                                <time class="media-meta" datetime="2016-06-11T18:29:20+08:00">2 days ago</time>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                                        <div class="media">
+                                            <div class="media-left p-r-10">
+                                                <i class="icon wb-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Settings updated</h6>
+                                                <time class="media-meta" datetime="2016-06-11T14:05:00+08:00">2 days ago</time>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                                        <div class="media">
+                                            <div class="media-left p-r-10">
+                                                <i class="icon wb-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">Configured new periodic job set #121</h6>
+                                                <time class="media-meta" datetime="2016-06-10T13:50:18+08:00">3 days ago</time>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                                        <div class="media">
+                                            <div class="media-left p-r-10">
+                                                <i class="icon wb-chat bg-orange-600 white icon-circle" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">New Sparkle version 2.3 available!</h6>
+                                                <time class="media-meta" datetime="2016-06-10T12:34:48+08:00">3 days ago</time>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu-footer">
+                            <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                                <i class="icon md-settings" aria-hidden="true"></i>
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+                                All notifications
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!-- End Navbar Toolbar Right -->
+        </div>
+    </div>
+</nav>
+<div class="site-menubar">
+    <div class="site-menubar-body">
+        <div>
+            <div>
+                <ul class="site-menu" data-plugin="menu">
+                    <li class="site-menu-category">Jobs</li>
+                    <li class="site-menu-item has-sub active open">
+                        <a href="javascript:void(0)">
+                            <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                            <span class="site-menu-title">Create Jobs</span>
+                             <div class="site-menu-badge">
+                                <span class="tag tag-pill tag-success">3</span>
+                            </div>
+                        </a>
+                        <ul class="site-menu-sub">
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Create Periodic Job</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Create On-Demand Job</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">New Interactive Job</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="site-menu-item has-sub">
+                        <a href="javascript:void(0)">
+                            <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                            <span class="site-menu-title">Modify Jobs</span>
+                            <span class="site-menu-arrow"></span>
+                        </a>
+                        <ul class="site-menu-sub">
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Update Periodic Job</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Update On-Demand Job</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Delete Periodic Job</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Change Periodic Job Schedule</span>
+                                </a>
+                            </li>
+                            <li class="site-menu-item">
+                                <a class="animsition-link" href="#">
+                                    <span class="site-menu-title">Delete On-Demand Job</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="site-menu-category">Analytics</li>
+                    <li class="site-menu-item">
+                        <a href="javascript:void(0)">
+                            <i class="site-menu-icon wb-bookmark" aria-hidden="true"></i>
+                            <span class="site-menu-title">Service</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a href="#">
+                            <i class="site-menu-icon wb-hammer" aria-hidden="true"></i>
+                            <span class="site-menu-title">Jobs</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a href="#">
+                            <i class="site-menu-icon wb-plugin" aria-hidden="true"></i>
+                            <span class="site-menu-title">Settings</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-category">Angular UI</li>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="#">
+                            <i class="site-menu-icon bd-angular" aria-hidden="true"></i>
+                            <span class="site-menu-title">Angular UI</span>
+                            <div class="site-menu-label">
+                                <span class="tag tag-danger tag-round">new</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="site-menubar-footer">
+        <a href="javascript: void(0);" class="fold-show" data-placement="top" data-toggle="tooltip"
+           data-original-title="Settings">
+            <span class="icon wb-settings" aria-hidden="true"></span>
+        </a>
+        <a href="/signOut" data-placement="top" data-toggle="tooltip" data-original-title="Lock">
+            <span class="icon wb-eye-close" aria-hidden="true"></span>
+        </a>
+        <a href="/signOut" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+            <span class="icon wb-power" aria-hidden="true"></span>
+        </a>
+    </div>
+</div>
+<!--<div class="site-gridmenu"></div>-->

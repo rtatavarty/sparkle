@@ -1,0 +1,91 @@
+@(title: String, plugin_css: Html = Html(" "), plugin_js: Html = Html(" "), page_js: Html = Html(" "), body_styles: String = "", admin: Option[models.daos.NsAdmin] = None)(content: Html)(implicit messages: Messages)
+
+<!DOCTYPE html>
+
+<html class="no-js css-menubar" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <meta name="description" content="sparkle bootstrap admin template">
+        <meta name="author" content="ratnam at context360.com">
+        <title>@title</title>
+        <link rel="apple-touch-icon" href="@routes.Assets.versioned("images/apple-touch-icon.png")">
+        <link rel="shortcut icon" href="@routes.Assets.versioned("images/favicon.ico")">
+        <!-- Stylesheets -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap-extend.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/bootstrap-datepicker/bootstrap-datepicker.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/site.min.css")">
+        <!-- Plugins -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/animsition/animsition.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/asscrollable/asScrollable.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/switchery/switchery.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/intro-js/introjs.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/slidepanel/slidePanel.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/flag-icon-css/flag-icon.min.css")">
+        @plugin_css
+        <!-- Fonts -->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("fonts/web-icons/web-icons.min.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("fonts/brand-icons/brand-icons.min.css")">
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+        <!--[if lt IE 9]>
+        <script src="@routes.Assets.versioned("vendor/html5shiv/html5shiv.min.js")"></script>
+        <![endif]-->
+        <!--[if lt IE 10]>
+        <script src="@routes.Assets.versioned("vendor/media-match/media.match.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/respond/respond.min.js")"></script>
+        <![endif]-->
+        <!-- Scripts -->
+        <script src="@routes.Assets.versioned("vendor/breakpoints/breakpoints.js")"></script>
+        <script nonce='234234lj'>
+            Breakpoints();
+        </script>
+    </head>
+
+    <body class="animsition @body_styles">
+        <!-- Page -->
+        @content
+        <!-- End Page -->
+        <!-- Core -->
+        <script src="@routes.Assets.versioned("vendor/babel-external-helpers/babel-external-helpers.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/jquery/jquery.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/tether/tether.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/bootstrap/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/bootstrap-datepicker/bootstrap-datepicker.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/animsition/animsition.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/mousewheel/jquery.mousewheel.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/asscrollbar/jquery-asScrollbar.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/asscrollable/jquery-asScrollable.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/ashoverscroll/jquery-asHoverScroll.min.js")"></script>
+        <!-- Plugins -->
+        <script src="@routes.Assets.versioned("vendor/switchery/switchery.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/intro-js/intro.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/screenfull/screenfull.min.js")"></script>
+        <script src="@routes.Assets.versioned("vendor/slidepanel/jquery-slidePanel.min.js")"></script>
+        @plugin_js
+        <!-- Scripts -->
+        <script src="@routes.Assets.versioned("js/State.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Component.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Plugin.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Base.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Config.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Section/Menubar.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Section/GridMenu.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Section/Sidebar.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Section/PageAside.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Plugin/menu.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/config/colors.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/config/tour.min.js")"></script>
+        <script nonce="2p34poi234">
+          Config.set('assets', 'assets');
+        </script>
+        <!-- Page -->
+        <script src="@routes.Assets.versioned("js/Site.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Plugin/asscrollable.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Plugin/slidepanel.min.js")"></script>
+        <script src="@routes.Assets.versioned("js/Plugin/switchery.min.js")"></script>
+        @page_js
+    </body>
+</html>
