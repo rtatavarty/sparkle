@@ -14,7 +14,7 @@ trait C360Init {}
 class C360InitClass extends C360Init {
   initializeDB()
 
-  def initializeDB() = {
+  def initializeDB(): Unit = {
     Logger.info("C360INIT: Creating database...")
     C360DBService.createDatabase()
     Logger.info("C360INIT: Creating tables...")
@@ -24,7 +24,7 @@ class C360InitClass extends C360Init {
 
 class C360Module(environment: Environment,
   configuration: Configuration) extends AbstractModule {
-  override def configure() = {
+  override def configure(): Unit = {
     // Select the right DB Connector based on Mode.
     Connector.mode = Some(environment.mode)
     bind(classOf[C360Init]).to(classOf[C360InitClass]).asEagerSingleton()

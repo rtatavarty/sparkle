@@ -5,9 +5,11 @@ package models
  * Created by ratnam on 4/7/16.
  */
 
+import java.nio.ByteBuffer
+
 import com.mohiva.play.silhouette.api.LoginInfo
+import com.outworkers.phantom.dsl._
 import com.typesafe.config.ConfigFactory
-import com.websudos.phantom.dsl._
 import models.daos._
 import play.api.Mode.Mode
 import play.api.{ Logger, Mode }
@@ -19,33 +21,87 @@ import scala.util.{ Failure, Success }
 
 object Connector {
 
-  def getConnector(mode: Mode) = {
+  def getConnector(mode: Mode): KeySpaceDef = {
     Logger.info("Init Connector... [" + mode + "]")
     val config = ConfigFactory.load()
     val (hosts, keySpaceName, username, password) = mode match {
       case Mode.Dev =>
         (config.getStringList("cassandra.development.hosts"),
           config.getString("cassandra.development.keyspace"),
-          config.getString("cassandra.development.username"),
-          config.getString("cassandra.development.password"))
+          if (config.hasPathOrNull("cassandra.development.username")) {
+            if (config.getIsNull("cassandra.development.username")) {
+              "" // handle null setting
+            } else {
+              config.getString("cassandra.development.username") // get and use non-null setting
+            }
+          } else {
+            "" // handle entirely unset path
+          },
+          if (config.hasPathOrNull("cassandra.development.password")) {
+            if (config.getIsNull("cassandra.development.password")) {
+              ""
+            } else {
+              config.getString("cassandra.development.password")
+            }
+          } else {
+            ""
+          })
       case Mode.Test =>
         (config.getStringList("cassandra.test.hosts"),
           config.getString("cassandra.test.keyspace"),
-          config.getString("cassandra.test.username"),
-          config.getString("cassandra.test.password"))
+          if (config.hasPathOrNull("cassandra.test.username")) {
+            if (config.getIsNull("cassandra.test.username")) {
+              ""
+            } else {
+              config.getString("cassandra.test.username")
+            }
+          } else {
+            ""
+          },
+          if (config.hasPathOrNull("cassandra.test.password")) {
+            if (config.getIsNull("cassandra.test.password")) {
+              ""
+            } else {
+              config.getString("cassandra.test.password")
+            }
+          } else {
+            ""
+          })
       case Mode.Prod =>
         (config.getStringList("cassandra.production.hosts"),
           config.getString("cassandra.production.keyspace"),
-          config.getString("cassandra.production.username"),
-          config.getString("cassandra.production.password"))
+          if (config.hasPathOrNull("cassandra.production.username")) {
+            if (config.getIsNull("cassandra.production.username")) {
+              ""
+            } else {
+              config.getString("cassandra.production.username")
+            }
+          } else {
+            ""
+          },
+          if (config.hasPathOrNull("cassandra.production.password")) {
+            if (config.getIsNull("cassandra.production.password")) {
+              ""
+            } else {
+              config.getString("cassandra.production.password")
+            }
+          } else {
+            ""
+          })
     }
 
-    ContactPoints.apply(hosts.asInstanceOf[java.util.List[String]])
-      .withClusterBuilder(_.withCredentials(username, password))
-      .keySpace(keySpaceName.asInstanceOf[String])
+    Logger.info("Connector Info: " + keySpaceName + "@" + hosts)
+    if (username.isEmpty) {
+      ContactPoints.apply(hosts.asInstanceOf[java.util.List[String]])
+        .keySpace(keySpaceName.asInstanceOf[String])
+    } else {
+      ContactPoints.apply(hosts.asInstanceOf[java.util.List[String]])
+        .withClusterBuilder(_.withCredentials(username, password))
+        .keySpace(keySpaceName.asInstanceOf[String])
+    }
   }
   var mode: Option[Mode] = None
-  lazy val connector = getConnector(mode.getOrElse(Mode.Dev))
+  lazy val connector: KeySpaceDef = getConnector(mode.getOrElse(Mode.Dev))
 }
 
 /**
@@ -54,9 +110,10 @@ object Connector {
  * @param keyspace
  *                 Provides the Connector definition
  */
-class C360Database(val keyspace: KeySpaceDef) extends Database(keyspace) {
+class C360Database(val keyspace: KeySpaceDef) extends Database[C360Database](keyspace) {
 
   object mNsAdmins extends INsAdmins with keyspace.Connector
+  object mNsJobDefinitions extends INsJobDefinitions with keyspace.Connector
 }
 
 object C360Database extends C360Database(Connector.connector)
@@ -74,7 +131,7 @@ trait C360DBService extends C360DatabaseProvider with Connector.connector.Connec
    * @return
    */
   def createDatabase(): Unit = {
-    Await.result(database.autocreate.future(), 5.seconds)
+    database.create(15.seconds)
   }
 
   private def createTable(table: CassandraTable[_, _]): Unit = {
@@ -115,6 +172,25 @@ trait C360DBService extends C360DatabaseProvider with Connector.connector.Connec
     database.mNsAdmins.getByLoginInfo(loginInfo)
   }
 
+  def saveJobDefinition(jobDefinition: NsJobDefinition): Future[ResultSet] = {
+    database.mNsJobDefinitions.store(jobDefinition)
+  }
+
+  def updateJar(jobId: String, jar: ByteBuffer): Future[ResultSet] = {
+    database.mNsJobDefinitions.updateJar(jobId, jar)
+  }
+
+  def getJobDefinition(jobId: String): Future[Option[NsJobDefinition]] = {
+    database.mNsJobDefinitions.getByID(jobId)
+  }
+
+  def getAllJobDefinitions: Future[List[NsJobDefinition]] = {
+    database.mNsJobDefinitions.getAllJobDefinitions
+  }
+
+  def deleteJobDefinition(jobId: String): Future[ResultSet] = {
+    database.mNsJobDefinitions.deleteJobDefinition(jobId)
+  }
 }
 
 object C360DBService extends C360DBService with C360DatabaseProvider

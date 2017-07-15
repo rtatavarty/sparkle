@@ -1,7 +1,7 @@
 package models.daos
 
 import com.mohiva.play.silhouette.api.{ Identity, LoginInfo }
-import com.websudos.phantom.dsl._
+import com.outworkers.phantom.dsl._
 import play.api.libs.json.Json
 
 import scala.concurrent.Future
@@ -32,7 +32,7 @@ case class NsAdmin(
   admins: Set[String]) extends Identity
 
 class NsAdmins extends CassandraTable[INsAdmins, NsAdmin] {
-  object id extends StringColumn(this) with PartitionKey[String]
+  object id extends StringColumn(this) with PartitionKey
   object login_info extends StringColumn(this)
   object password_info extends StringColumn(this)
   object first_name extends OptionalStringColumn(this)
@@ -49,32 +49,8 @@ class NsAdmins extends CassandraTable[INsAdmins, NsAdmin] {
   object login_ip extends OptionalStringColumn(this)
   object created_at extends OptionalDateTimeColumn(this)
   object updated_at extends OptionalDateTimeColumn(this)
-  object app_keys extends SetColumn[INsAdmins, NsAdmin, String](this)
-  object admins extends SetColumn[INsAdmins, NsAdmin, String](this)
-
-  def fromRow(row: Row): NsAdmin = {
-    NsAdmin(
-      id(row),
-      login_info(row),
-      password_info(row),
-      first_name(row),
-      last_name(row),
-      email(row),
-      url(row),
-      org(row),
-      role(row),
-      is_owner(row),
-      owner_id(row),
-      login_count(row),
-      login_latest(row),
-      login_current(row),
-      login_ip(row),
-      created_at(row),
-      updated_at(row),
-      app_keys(row),
-      admins(row)
-    )
-  }
+  object app_keys extends SetColumn[String](this)
+  object admins extends SetColumn[String](this)
 }
 
 abstract class INsAdmins extends NsAdmins with RootConnector {

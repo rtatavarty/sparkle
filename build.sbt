@@ -2,7 +2,7 @@ import scalariform.formatter.preferences.{ DoubleIndentClassDeclaration, FormatX
 
 name := "c360sparkle"
 
-version := "0.1-SNAPSHOT"
+version := "0.2-SNAPSHOT"
 
 maintainer := "Context360 Analytics <admin@context360.com>"
 
@@ -22,7 +22,7 @@ rpmBrpJavaRepackJars := true
 
 scalaVersion := "2.11.8"
 
-val PhantomVersion = "1.22.0"
+val PhantomVersion = "2.12.1"
 
 routesGenerator := InjectedRoutesGenerator
 
@@ -55,12 +55,13 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   cache,
   ws,
-  "com.websudos"            %%  "phantom-dsl"          % PhantomVersion,
-  "com.mohiva"              %%  "play-silhouette"                 % "4.0.0-BETA4",
-  "com.mohiva"              %%  "play-silhouette-password-bcrypt" % "4.0.0-BETA4",
-  "com.mohiva"              %%  "play-silhouette-persistence"     % "4.0.0-BETA4",
-  "com.mohiva"              %%  "play-silhouette-testkit"         % "4.0.0-BETA4" % "test",
-  "net.codingwell"          %%  "scala-guice"          % "4.0.1",
+  "com.outworkers"          %%  "phantom-dsl"          % PhantomVersion,
+  "com.mohiva"              %%  "play-silhouette"                 % "4.0.0",
+  "com.mohiva"              %%  "play-silhouette-password-bcrypt" % "4.0.0",
+  "com.mohiva"              %%  "play-silhouette-crypto-jca"      % "4.0.0",
+  "com.mohiva"              %%  "play-silhouette-persistence"     % "4.0.0",
+  "com.mohiva"              %%  "play-silhouette-testkit"         % "4.0.0" % "test",
+  "net.codingwell"          %%  "scala-guice"          % "4.1.0",
   "net.ceedubs"             %%  "ficus"                % "1.1.2",
   "com.adrianhurt"          %%  "play-bootstrap"       % "1.1-P25-B4",
   "org.webjars"             %   "font-awesome"         % "4.6.3",

@@ -1,11 +1,14 @@
 package modules
 
+import com.google.inject.name.Named
 import com.google.inject.{ AbstractModule, Provides }
 import com.mohiva.play.silhouette.api.actions.{ SecuredErrorHandler, UnsecuredErrorHandler }
+import com.mohiva.play.silhouette.api.crypto.{ CookieSigner, Crypter, CrypterAuthenticatorEncoder }
 import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
 import com.mohiva.play.silhouette.api.services._
 import com.mohiva.play.silhouette.api.util._
 import com.mohiva.play.silhouette.api.{ Environment, EventBus, Silhouette, SilhouetteProvider }
+import com.mohiva.play.silhouette.crypto.{ JcaCookieSigner, JcaCookieSignerSettings, JcaCrypter, JcaCrypterSettings }
 import com.mohiva.play.silhouette.impl.authenticators._
 import com.mohiva.play.silhouette.impl.providers._
 import com.mohiva.play.silhouette.impl.util._
@@ -75,6 +78,32 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
   }
 
   /**
+   * Provides the cookie signer for the authenticator.
+   *
+   * @param configuration The Play configuration.
+   * @return The cookie signer for the authenticator.
+   */
+  @Provides @Named("authenticator-cookie-signer")
+  def provideAuthenticatorCookieSigner(configuration: Configuration): CookieSigner = {
+    val config = configuration.underlying.as[JcaCookieSignerSettings]("silhouette.authenticator.cookie.signer")
+
+    new JcaCookieSigner(config)
+  }
+
+  /**
+   * Provides the crypter for the authenticator.
+   *
+   * @param configuration The Play configuration.
+   * @return The crypter for the authenticator.
+   */
+  @Provides @Named("authenticator-crypter")
+  def provideAuthenticatorCrypter(configuration: Configuration): Crypter = {
+    val config = configuration.underlying.as[JcaCrypterSettings]("silhouette.authenticator.crypter")
+
+    new JcaCrypter(config)
+  }
+
+  /**
    * Provides the authenticator service.
    *
    * @param fingerprintGenerator The fingerprint generator implementation.
@@ -85,13 +114,17 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
    */
   @Provides
   def provideAuthenticatorService(
+    @Named("authenticator-cookie-signer") cookieSigner: CookieSigner,
+    @Named("authenticator-crypter") crypter: Crypter,
     fingerprintGenerator: FingerprintGenerator,
     idGenerator: IDGenerator,
     configuration: Configuration,
     clock: Clock): AuthenticatorService[CookieAuthenticator] = {
 
     val config = configuration.underlying.as[CookieAuthenticatorSettings]("silhouette.authenticator")
-    new CookieAuthenticatorService(config, None, fingerprintGenerator, idGenerator, clock)
+    val encoder = new CrypterAuthenticatorEncoder(crypter)
+
+    new CookieAuthenticatorService(config, None, cookieSigner, encoder, fingerprintGenerator, idGenerator, clock)
   }
 
   /**
@@ -103,23 +136,33 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
   @Provides
   def provideAuthInfoRepository(
     passwordInfoDAO: DelegableAuthInfoDAO[PasswordInfo]): AuthInfoRepository = {
-
     new DelegableAuthInfoRepository(passwordInfoDAO)
+  }
+
+  /**
+   * Provides the password hasher registry.
+   *
+   * @param passwordHasher The default password hasher implementation.
+   * @return The password hasher registry.
+   */
+  @Provides
+  def providePasswordHasherRegistry(passwordHasher: PasswordHasher): PasswordHasherRegistry = {
+    PasswordHasherRegistry(passwordHasher)
   }
 
   /**
    * Provides the credentials provider.
    *
    * @param authInfoRepository The auth info repository implementation.
-   * @param passwordHasher The default password hasher implementation.
+   * @param passwordHasherRegistry The password hasher registry.
    * @return The credentials provider.
    */
   @Provides
   def provideCredentialsProvider(
     authInfoRepository: AuthInfoRepository,
-    passwordHasher: PasswordHasher): CredentialsProvider = {
+    passwordHasherRegistry: PasswordHasherRegistry): CredentialsProvider = {
 
-    new CredentialsProvider(authInfoRepository, passwordHasher, Seq(passwordHasher))
+    new CredentialsProvider(authInfoRepository, passwordHasherRegistry)
   }
 
 }
