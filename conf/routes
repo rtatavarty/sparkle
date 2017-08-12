@@ -11,5 +11,14 @@ GET     /signOut                    controllers.Application.signOut
 POST    /signUp                     controllers.SignUpController.signUp
 POST    /authenticate/credentials   controllers.SignInController.signIn
 
+# Job Definition CRUD
+GET      /job_definitions                   controllers.Application.listJobDefinitions
+POST     /job_definitions/create            controllers.Application.createJobDefinition
+POST     /job_definitions/modify            controllers.Application.modifyJobDefinition
+GET      /job_definitions/get/:id           controllers.Application.getJobDefinition(id: String)
+GET      /job_definitions/delete/:id        controllers.Application.deleteJobDefinition(id: String)
+GET      /job_definitions/enable/:id        controllers.Application.enableJobDefinition(id: String)
+GET      /job_definitions/disable/:id       controllers.Application.disableJobDefinition(id: String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
