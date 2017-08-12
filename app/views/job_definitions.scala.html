@@ -1,0 +1,184 @@
+@(admin: models.daos.NsAdmin, jobDefs: List[models.daos.NsJobDefinition], jobDefCreateForm: Form[forms.JobDefCreateForm.JobDefData])(implicit request: RequestHeader, messages: Messages)
+
+@import b4.inline.fieldConstructor
+
+@plugin_css = {
+<link rel="stylesheet" href="@routes.Assets.versioned("vendor/floatthead/jquery.floatThead.css")">
+<link rel="stylesheet" href="@routes.Assets.versioned("vendor/dropify/dropify.min.css")">
+<link rel="stylesheet" href="@routes.Assets.versioned("vendor/toastr/toastr.min.css")">
+}
+
+@plugin_js = {
+<script src="@routes.Assets.versioned("vendor/jquery-tabledit/jquery.tabledit.min.js")"></script>
+<script src="@routes.Assets.versioned("vendor/peity/jquery.peity.min.js")"></script>
+<script src="@routes.Assets.versioned("vendor/floatthead/jquery.floatThead.min.js")"></script>
+<script src="@routes.Assets.versioned("vendor/dropify/dropify.min.js")"></script>
+<script src="@routes.Assets.versioned("vendor/toastr/toastr.min.js")"></script>
+}
+
+@page_js = {
+<script src="@routes.Assets.versioned("js/Plugin/peity.min.js")"></script>
+<script src="@routes.Assets.versioned("js/Plugin/floatthead.min.js")"></script>
+<script src="@routes.Assets.versioned("js/Plugin/dropify.min.js")"></script>
+<script src="@routes.Assets.versioned("js/Plugin/toastr.min.js")"></script>
+<script nonce="763487yiyiy7">
+        (function(document, window, $) {
+            'use strict';
+            var Site = window.Site;
+            $(document).ready(function() {
+                Site.run();
+            });
+        })(document, window, jQuery);
+</script>
+<script nonce="5fvggh23g">
+    $('#editJobDefModal').on('show.bs.modal', function(e) {
+        // get data-id attribute of the clicked element
+        var $modal = $(this),
+            jobId = $(e.relatedTarget).data("id");
+        if (jobId != "new") {
+            $('form').get(0).setAttribute('action', '/job_definitions/modify');
+            $('form').get(0).enctype = 'multipart/form-data';
+            var $jobDefInfo = $.getJSON("/job_definitions/get/" + jobId, function(jdi) {
+                $modal.find('.modal-title').html('Edit Job Definition')
+                $('#jdid').val(jdi.job_definition_id)
+                $('#name').val(jdi.job_name)
+                $('#priority').val(jdi.job_priority)
+                $('#type').val(jdi.job_type)
+                $('#cron_string').val(jdi.cron_string)
+            });
+        } else {
+            $('form').get(0).setAttribute('action', '/job_definitions/create');
+            $('form').get(0).enctype = 'multipart/form-data';
+            $modal.find('.modal-title').html('New Job Definition')
+            $('#jdid').val("jobDefId")
+            $('#name').val("")
+            $('#priority').val("")
+            $('#type').val("")
+            $('#cron_string').val("")
+        }
+        // populate the textbox
+        // $modal.find('.edit-content').html(jobDefInfo);
+    });
+</script>
+<script nonce="jhg654gy4wex">
+function Notify(msg) {
+    //toastr.clear();
+    toastr.options.onclick = function () {
+        //alert('You can perform some custom action after a toast goes away');
+    }
+    toastr.options.positionClass = "toast-top-right";
+    toastr.options.timeOut = "0";
+    if(msg.indexOf("Fail") !== -1) {
+    toastr.error(msg, '@Messages("jobDef.result")');
+    } else {
+    toastr.success(msg, '@Messages("jobDef.result")');
+    }
+}
+
+$(document).ready(function () {
+    @request.flash.get("result").map { msg =>
+    Notify('@msg');
+    }
+});
+</script>
+}
+
+@import java.lang.String; val body_styles=""
+
+@main(Messages("home.title"), plugin_css, plugin_js, page_js, body_styles, admin = Some(admin)) {
+<div class="page">
+    <div class="page-header">
+        <h2 class="page-title"> Job Definitions</h2>
+    </div>
+    <div class="page-content">
+    <div class="panel">
+        <div class="panel-body container-fluid">
+            <div class="table-responsive">
+<table class="table table-striped table-bordered" data-plugin="floatThead">
+    <thead>
+        <tr class="table-info">
+            <th>Id</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Schedule</th>
+            <th>Priority</th>
+            <th>Jar</th>
+            <th>Created At</th>
+            <th>Failed Count</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+    @for(jobDef <- jobDefs) {
+        @if(jobDef.scheduled) {
+        <tr>
+        } else {
+        <tr class="table-warning">
+        }
+            <td style="vertical-align:middle">@jobDef.job_definition_id</td>
+            <td style="vertical-align:middle">@jobDef.job_name</td>
+            <td style="vertical-align:middle">@jobDef.job_type</td>
+            <td style="vertical-align:middle">@jobDef.cron_string</td>
+            <td style="vertical-align:middle">@jobDef.job_priority</td>
+            <td style="vertical-align:middle">
+                @if(jobDef.jar.isDefined) {
+                    Size: @jobDef.jar.get.array().size
+                } else {
+                    Not Uploaded!
+                }
+            </td>
+            <td style="vertical-align:middle">@jobDef.created_at</td>
+            <td style="vertical-align:middle">@jobDef.failed_count</td>
+            <td style="vertical-align:middle">
+                <div class="btn-group">
+                    @if(jobDef.scheduled) {
+                    <!--<button type="button" class="btn btn-warning">Disable</button>-->
+                    <a role="button" class="btn btn-warning" href="/job_definitions/disable/@jobDef.job_definition_id">Disable</a>
+                    } else {
+                    <!--<button type="button" class="btn btn-success">Enable</button>-->
+                    <a role="button" class="btn btn-success" href="/job_definitions/enable/@jobDef.job_definition_id">Enable</a>
+                    }
+                    <!--<button type="button" class="btn btn-danger">Delete</button>-->
+                    <a role="button" class="btn btn-danger" href="/job_definitions/delete/@jobDef.job_definition_id">Delete</a>
+                    <button type="button" class="btn btn-primary open-editModal" data-target="#editJobDefModal" data-toggle="modal" data-id="@jobDef.job_definition_id">Edit</button>
+                </div>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+<button type="button" class="btn btn-floating btn-success open-editModal" data-target="#editJobDefModal" data-toggle="modal" data-id="new"><i class="icon wb-plus" aria-hidden="true"></i></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal -->
+<div id="editJobDefModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Job Definition</h4>
+            </div>
+            <div class="modal-body">
+                @helper.form(action = routes.Application.modifyJobDefinition(), 'enctype -> "multipart/form-data") {
+                @helper.CSRF.formField
+                @b4.hidden("jdid", "jobDefId", 'id -> "jdid")
+                @b4.text(jobDefCreateForm("name"), '_hiddenLabel -> Messages("jobDef.name"), 'placeholder -> Messages("jobDef.name"), 'class -> "form-control input")
+                @b4.text(jobDefCreateForm("priority"), '_hiddenLabel -> Messages("jobDef.priority"), 'placeholder -> Messages("jobDef.priority"), 'class -> "form-control input")
+                @b4.select(jobDefCreateForm("type"), options = Seq("Periodic"->"Periodic Job","OnDemand"->"OnDemand Job"), '_label -> "Select", '_default -> "Select an option")
+                <input type="file" name="jarFile" id="input-file-now" data-plugin="dropify" data-height="80" data-default-file=""
+                       data-allowed-file-extensions="jar" data-max-file-size="3M"/>
+                @b4.text(jobDefCreateForm("cron_string"), '_hiddenLabel -> Messages("jobDef.cron_string"), 'placeholder -> Messages("jobDef.cron_string"), 'class -> "form-control input")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="save-worker">Save Job Definition</button>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+}

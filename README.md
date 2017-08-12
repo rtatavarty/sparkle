@@ -1,7 +1,15 @@
 # Sparkle
 Analytics with Spark and Cassandra
 
-## Template Features:
+**Version 0.3**
+
+## Features
+
+- Create/List Job Definitions
+- Modify Job parameters
+- Modify Job Jar file
+
+## Template
 
 - Bootstrap 4
 - Silhouette authentication

@@ -35,5 +35,18 @@ or.use.social = Or use your existing account on Context360 Inc to sign in:
 
 google = Google
 
+jobDef.name = Job Name
+jobDef.priority = Job Priority
+jobDef.cron_string = Job Cron String
+jobDef.initialized = Jobs Initialized
+jobDef.stopped = Jobs Stopped
+jobDef.result = Job Save Result:
+jobDef.created = New Job Created!
+jobDef.modified = Job Modified!
+jobDef.deleted = Job Deleted!
+jobDef.enabled = Job Scheduled!
+jobDef.disabled = Job Unscheduled!
+jobDef.savefailed = {0}. Failed to save Job! Try again.
+
 response.ok = 0712
 response.error = 0612

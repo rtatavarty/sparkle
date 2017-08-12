@@ -68,6 +68,41 @@ abstract class INsJobDefinitions extends NsJobDefinitions with RootConnector {
     select.fetch()
   }
 
+  def modifyJobDefinition(jd: NsJobDefinition): Future[ResultSet] = {
+    if (jd.jar.exists(j => j.array().length > 0)) {
+      update
+        .where(_.job_definition_id eqs jd.job_definition_id)
+        .modify(_.job_name setTo jd.job_name)
+        .and(_.job_priority setTo jd.job_priority)
+        .and(_.job_type setTo jd.job_type)
+        .and(_.cron_string setTo jd.cron_string)
+        .and(_.jar setTo jd.jar)
+        .future()
+    } else {
+      update
+        .where(_.job_definition_id eqs jd.job_definition_id)
+        .modify(_.job_name setTo jd.job_name)
+        .and(_.job_priority setTo jd.job_priority)
+        .and(_.job_type setTo jd.job_type)
+        .and(_.cron_string setTo jd.cron_string)
+        .future()
+    }
+  }
+
+  def enableJobDefinition(id: String): Future[ResultSet] = {
+    update
+      .where(_.job_definition_id eqs id)
+      .modify(_.scheduled setTo true)
+      .future()
+  }
+
+  def disableJobDefinition(id: String): Future[ResultSet] = {
+    update
+      .where(_.job_definition_id eqs id)
+      .modify(_.scheduled setTo false)
+      .future()
+  }
+
   def deleteJobDefinition(jobId: String): Future[ResultSet] = {
     delete.where(_.job_definition_id eqs jobId).future()
   }

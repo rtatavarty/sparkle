@@ -188,6 +188,18 @@ trait C360DBService extends C360DatabaseProvider with Connector.connector.Connec
     database.mNsJobDefinitions.getAllJobDefinitions
   }
 
+  def modifyJobDefinition(jd: NsJobDefinition): Future[ResultSet] = {
+    database.mNsJobDefinitions.modifyJobDefinition(jd)
+  }
+
+  def enableJobDefinition(jobId: String): Future[ResultSet] = {
+    database.mNsJobDefinitions.enableJobDefinition(jobId)
+  }
+
+  def disableJobDefinition(jobId: String): Future[ResultSet] = {
+    database.mNsJobDefinitions.disableJobDefinition(jobId)
+  }
+
   def deleteJobDefinition(jobId: String): Future[ResultSet] = {
     database.mNsJobDefinitions.deleteJobDefinition(jobId)
   }
