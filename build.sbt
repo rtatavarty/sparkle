@@ -2,7 +2,7 @@ import scalariform.formatter.preferences.{ DoubleIndentClassDeclaration, FormatX
 
 name := "c360sparkle"
 
-version := "0.2-SNAPSHOT"
+version := "0.3"
 
 maintainer := "Context360 Analytics <admin@context360.com>"
 
